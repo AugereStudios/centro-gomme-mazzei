@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Centro Gomme Mazzei — prototipo frontend
 
-## Getting Started
-
-First, run the development server:
+Prototipo **frontend-only** (nessun backend, nessun database) in Next.js 16 / App Router, TypeScript e
+Tailwind CSS v4. Tutti i dati sono mock locali.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Superfici
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Area | Rotte |
+| --- | --- |
+| Sito vetrina | `/`, `/servizi`, `/contatti` |
+| Store B2C | `/store`, `/store/catalogo`, `/store/pneu/[id]`, `/store/carrello`, `/store/checkout` |
+| Portale B2B | `/b2b/login`, `/b2b/dashboard` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Le tre aree sono separate in route group: `app/(site)`, `app/(store)`, `app/(b2b)`.
 
-## Learn More
+## Dove si innestano i dati reali
 
-To learn more about Next.js, take a look at the following resources:
+| Cosa | File | Nota |
+| --- | --- | --- |
+| Listino sovrapprezzi montaggio | `lib/config/pricing.ts` | **Placeholder.** Unica sorgente dei valori R15–R22, delle spese di spedizione e dell'IVA. La UI usa solo `getMountingFee()` e `getShipping()`. |
+| Catalogo articoli | `lib/data/tyres.ts` | Mock con la stessa forma di `types/index.ts`; da sostituire con la risposta della API fornitore. |
+| Dati aziendali (NAP, orari) | `lib/config/site.ts` | Riusati da header, footer, contatti, checkout e metadata. |
+| Anagrafica e ordini B2B | `lib/data/b2b.ts` | Sessione e movimenti dimostrativi. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Stato applicativo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Zustand con middleware `persist` (localStorage). Entrambi gli store sono **placeholder dimostrativi**,
+marcati come tali in testa al file:
 
-## Deploy on Vercel
+- `lib/store/cart-store.ts` — righe carrello, modalita' di consegna, ultimo ordine simulato.
+- `lib/store/b2b-store.ts` — sessione B2B finta: il login accetta qualsiasi credenziale.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Il calcolo dei totali non vive negli store ma in `lib/cart/totals.ts` (`computeTotals`), funzione pura e
+unico punto in cui il carrello diventa un totale:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+totale = pneumatici + (consegna === "officina" ? Σ getMountingFee(raggio) × qty : 0) + spedizione
+```
+
+I componenti che leggono gli store persistiti usano `lib/hooks/use-hydrated.ts` per non divergere dal
+markup generato in build.
+
+## Design system
+
+Token definiti una sola volta in `app/globals.css` (blocco `@theme`): sfondo `#0A0A0A`, accento
+`#C0392B`, testi `#FFFFFF / #9A9A9A / #5C5C5C`, bordi `#2A2A2A`, raggio `2px`, font Inter.
+Le classi editoriali condivise (`.eyebrow`, `.headline`, `.rule-accent`, `.bullet-accent`,
+`.hairline-grid`, `.grid-texture`) stanno nello stesso file; le primitive UI in `components/ui/`.
+
+## Verifiche
+
+```bash
+npx tsc --noEmit
+npx eslint .
+npm run build
+```
