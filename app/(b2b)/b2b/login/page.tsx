@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { LoginForm } from "@/components/b2b/LoginForm";
-import { BulletList, Eyebrow, Rule } from "@/components/ui/Primitives";
+import { BulletList, SectionHeading } from "@/components/ui/Primitives";
 import { site } from "@/lib/config/site";
 
 export const metadata: Metadata = {
@@ -22,15 +22,15 @@ export default function B2BLoginPage() {
       <div className="grid-texture absolute inset-0 opacity-30" aria-hidden="true" />
       <div className="container-page relative grid gap-12 py-16 lg:grid-cols-2 lg:py-24">
         <div className="flex flex-col gap-6">
-          <Eyebrow>Area riservata</Eyebrow>
-          <Rule />
-          <h1 className="headline text-4xl leading-[1.08] sm:text-5xl">
-            Il portale per officine, gommisti e flotte.
-          </h1>
-          <p className="max-w-xl text-base leading-relaxed text-fg-2">
-            Consulta disponibilita&apos; e prezzi netti riservati al canale professionale, con la stessa
-            logistica del banco di {site.address.city}.
-          </p>
+          <SectionHeading
+            gap={6}
+            level={1}
+            eyebrow="Area riservata"
+            title="Il portale per officine, gommisti e flotte."
+            titleClassName="text-4xl leading-[1.08] sm:text-5xl"
+            lead={`Consulta disponibilita' e prezzi netti riservati al canale professionale, con la stessa logistica del banco di ${site.address.city}.`}
+            leadClassName="max-w-xl text-base leading-relaxed text-fg-2"
+          />
           <BulletList items={vantaggi} className="max-w-lg" />
           <div className="mt-4 flex flex-col gap-1 border-t border-line pt-6">
             <span className="eyebrow">Attivazione utenze</span>

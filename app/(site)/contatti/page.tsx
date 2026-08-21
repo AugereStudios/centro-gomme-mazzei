@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/ContactForm";
 import { MapPlaceholder } from "@/components/site/MapPlaceholder";
-import { BulletList, Eyebrow, Panel, Rule } from "@/components/ui/Primitives";
+import { BulletList, Eyebrow, Panel, Rule, SectionHeading } from "@/components/ui/Primitives";
 import { Table, TableWrap, Td, Th } from "@/components/ui/Table";
 import { addressLine, site } from "@/lib/config/site";
 
@@ -74,13 +74,14 @@ export default function ContattiPage() {
       <section className="border-b border-line py-14 lg:py-20">
         <div className="container-page grid gap-10 lg:grid-cols-12">
           <div className="flex flex-col gap-6 lg:col-span-5">
-            <Eyebrow>Orari di apertura</Eyebrow>
-            <Rule />
-            <h2 className="headline text-2xl sm:text-3xl">Aperti sei giorni su sette</h2>
-            <p className="text-sm leading-relaxed text-fg-2">
-              Il sabato pomeriggio l&apos;officina resta chiusa. Per interventi su mezzi agricoli e industriali
-              concordiamo un orario dedicato.
-            </p>
+            <SectionHeading
+              gap={6}
+              eyebrow="Orari di apertura"
+              title="Aperti sei giorni su sette"
+              titleClassName="text-2xl sm:text-3xl"
+              lead="Il sabato pomeriggio l'officina resta chiusa. Per interventi su mezzi agricoli e industriali concordiamo un orario dedicato."
+              leadClassName="text-sm leading-relaxed text-fg-2"
+            />
             <TableWrap>
               <Table>
                 <thead>
@@ -104,9 +105,12 @@ export default function ContattiPage() {
           </div>
 
           <div className="flex flex-col gap-6 lg:col-span-7">
-            <Eyebrow>Richiesta di contatto</Eyebrow>
-            <Rule />
-            <h2 className="headline text-2xl sm:text-3xl">Scrivici la misura o il servizio che ti serve</h2>
+            <SectionHeading
+              gap={6}
+              eyebrow="Richiesta di contatto"
+              title="Scrivici la misura o il servizio che ti serve"
+              titleClassName="text-2xl sm:text-3xl"
+            />
             <ContactForm />
           </div>
         </div>

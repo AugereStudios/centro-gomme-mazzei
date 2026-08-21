@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AddToCartPanel } from "@/components/store/AddToCartPanel";
+import { TyreBadges } from "@/components/store/TyreBadges";
 import { TyreCard } from "@/components/store/TyreCard";
 import { TyreVisual } from "@/components/store/TyreVisual";
 import { ButtonLink } from "@/components/ui/Button";
-import { Badge, Eyebrow, Panel, Rule, SpecRow } from "@/components/ui/Primitives";
+import { Eyebrow, Panel, Rule, SectionHeading, SpecRow } from "@/components/ui/Primitives";
 import { site } from "@/lib/config/site";
 import { getTyreById, tyres } from "@/lib/data/tyres";
 import { vehicleLabels } from "@/lib/data/vehicles";
@@ -59,12 +60,7 @@ export default async function TyreDetailPage(props: PageProps<"/store/pneu/[id]"
           {/* Colonna sinistra: visual + specifiche */}
           <div className="flex flex-col gap-8 lg:col-span-7">
             <div className="flex flex-col gap-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge tone="accent">{seasonLabels[tyre.season]}</Badge>
-                <Badge>{vehicleLabels[tyre.vehicleClass]}</Badge>
-                {tyre.runflat ? <Badge>Run-flat</Badge> : null}
-                {!online ? <Badge tone="muted">Su preventivo</Badge> : null}
-              </div>
+              <TyreBadges tyre={tyre} showVehicleClass />
               <Eyebrow>{tyre.brand}</Eyebrow>
               <h1 className="headline text-3xl leading-tight sm:text-4xl">{tyre.model}</h1>
               <p className="text-lg text-fg-2">{formatSize(tyre)}</p>
@@ -157,11 +153,11 @@ export default async function TyreDetailPage(props: PageProps<"/store/pneu/[id]"
       {correlati.length > 0 ? (
         <section className="py-14 lg:py-20">
           <div className="container-page flex flex-col gap-8">
-            <div className="flex flex-col gap-4">
-              <Eyebrow>Alternative</Eyebrow>
-              <Rule />
-              <h2 className="headline text-2xl">Altri articoli per {vehicleLabels[tyre.vehicleClass].toLowerCase()}</h2>
-            </div>
+            <SectionHeading
+              eyebrow="Alternative"
+              title={`Altri articoli per ${vehicleLabels[tyre.vehicleClass].toLowerCase()}`}
+              titleClassName="text-2xl"
+            />
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {correlati.map((t) => (
                 <TyreCard key={t.id} tyre={t} />

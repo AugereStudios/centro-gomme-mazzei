@@ -15,17 +15,16 @@ export default function ServiziPage() {
     <>
       <section className="relative border-b border-line">
         <div className="grid-texture absolute inset-x-0 h-64 opacity-30" aria-hidden="true" />
-        <div className="container-page relative flex flex-col gap-6 py-16 lg:py-20">
-          <Eyebrow>Officina</Eyebrow>
-          <Rule />
-          <h1 className="headline max-w-3xl text-4xl leading-[1.08] sm:text-5xl">
-            Quattro lavorazioni che decidono la durata di un treno di gomme.
-          </h1>
-          <p className="max-w-2xl text-base leading-relaxed text-fg-2">
-            Ogni intervento viene eseguito con attrezzatura elettronica e documentato. Su richiesta consegniamo
-            il rapporto di misura prima e dopo la regolazione.
-          </p>
-        </div>
+        <SectionHeading
+          className="container-page relative py-16 lg:py-20"
+          gap={6}
+          level={1}
+          eyebrow="Officina"
+          title="Quattro lavorazioni che decidono la durata di un treno di gomme."
+          titleClassName="max-w-3xl text-4xl leading-[1.08] sm:text-5xl"
+          lead="Ogni intervento viene eseguito con attrezzatura elettronica e documentato. Su richiesta consegniamo il rapporto di misura prima e dopo la regolazione."
+          leadClassName="max-w-2xl text-base leading-relaxed text-fg-2"
+        />
       </section>
 
       {services.map((service, index) => (

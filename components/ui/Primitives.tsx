@@ -14,26 +14,39 @@ export function SectionHeading({
   title,
   lead,
   align = "left",
+  level = 2,
+  gap = 4,
+  titleClassName = "text-2xl sm:text-3xl md:text-4xl",
+  leadClassName = "max-w-2xl text-sm leading-relaxed text-fg-2 sm:text-base",
   className,
 }: {
-  eyebrow?: string;
+  eyebrow?: ReactNode;
   title: ReactNode;
   lead?: ReactNode;
   align?: "left" | "center";
+  /** 1 per il titolo principale di pagina, 2 per le intestazioni di sezione. */
+  level?: 1 | 2;
+  /** Spaziatura verticale: una classe sola, per non far collidere due gap- di Tailwind. */
+  gap?: 4 | 5 | 6;
+  titleClassName?: string;
+  leadClassName?: string;
   className?: string;
 }) {
+  const Title = level === 1 ? "h1" : "h2";
+  const gapClass = gap === 6 ? "gap-6" : gap === 5 ? "gap-5" : "gap-4";
   return (
     <div
       className={classNames(
-        "flex flex-col gap-4",
+        "flex flex-col",
+        gapClass,
         align === "center" && "items-center text-center",
         className,
       )}
     >
       {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
       <Rule />
-      <h2 className="headline text-2xl sm:text-3xl md:text-4xl">{title}</h2>
-      {lead ? <p className="max-w-2xl text-sm leading-relaxed text-fg-2 sm:text-base">{lead}</p> : null}
+      <Title className={classNames("headline", titleClassName)}>{title}</Title>
+      {lead ? <p className={leadClassName}>{lead}</p> : null}
     </div>
   );
 }

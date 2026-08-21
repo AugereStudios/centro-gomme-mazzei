@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { TyreCard } from "@/components/store/TyreCard";
 import { Button } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Eyebrow, Field, Select } from "@/components/ui/Primitives";
 import { brands, tyres } from "@/lib/data/tyres";
 import { vehicleLabels } from "@/lib/data/vehicles";
@@ -196,17 +197,16 @@ export function CatalogView() {
         </div>
 
         {results.length === 0 ? (
-          <div className="flex flex-col items-start gap-4 border border-line bg-surface p-8">
-            <span className="rule-accent" aria-hidden="true" />
-            <h2 className="headline text-xl">Nessun articolo per questi filtri</h2>
-            <p className="max-w-lg text-sm leading-relaxed text-fg-2">
-              La misura potrebbe essere disponibile su ordinazione: chiamaci in officina oppure azzera i filtri
-              per vedere tutto il catalogo.
-            </p>
-            <Button variant="outline" onClick={() => router.replace("/store/catalogo", { scroll: false })}>
-              Azzera filtri
-            </Button>
-          </div>
+          <EmptyState
+            level={2}
+            title="Nessun articolo per questi filtri"
+            description="La misura potrebbe essere disponibile su ordinazione: chiamaci in officina oppure azzera i filtri per vedere tutto il catalogo."
+            action={
+              <Button variant="outline" onClick={() => router.replace("/store/catalogo", { scroll: false })}>
+                Azzera filtri
+              </Button>
+            }
+          />
         ) : (
           <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {results.map((tyre) => (

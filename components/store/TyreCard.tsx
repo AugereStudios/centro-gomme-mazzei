@@ -1,8 +1,8 @@
 import Link from "next/link";
+import { TyreBadges } from "@/components/store/TyreBadges";
 import { TyreVisual } from "@/components/store/TyreVisual";
-import { Badge } from "@/components/ui/Primitives";
 import { getMountingFee } from "@/lib/config/pricing";
-import { formatEUR, formatSize, formatSizeShort, seasonLabels } from "@/lib/utils/format";
+import { formatEUR, formatSize, formatSizeShort } from "@/lib/utils/format";
 import type { Tyre } from "@/types";
 
 export function TyreCard({ tyre }: { tyre: Tyre }) {
@@ -13,11 +13,7 @@ export function TyreCard({ tyre }: { tyre: Tyre }) {
       <TyreVisual size={formatSizeShort(tyre)} className="aspect-4/3 border-b border-line" />
 
       <div className="flex flex-1 flex-col gap-4 p-5">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge tone="accent">{seasonLabels[tyre.season]}</Badge>
-          {tyre.runflat ? <Badge>Run-flat</Badge> : null}
-          {!online ? <Badge tone="muted">Su preventivo</Badge> : null}
-        </div>
+        <TyreBadges tyre={tyre} />
 
         <div className="flex flex-col gap-1">
           <p className="eyebrow">{tyre.brand}</p>

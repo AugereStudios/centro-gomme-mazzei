@@ -1,12 +1,5 @@
-import { SiteFooter } from "@/components/site/SiteFooter";
-import { SiteHeader } from "@/components/site/SiteHeader";
+import { PublicShell } from "@/components/site/PublicShell";
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <SiteHeader />
-      <main className="flex-1">{children}</main>
-      <SiteFooter />
-    </>
-  );
+  return <PublicShell>{children}</PublicShell>;
 }

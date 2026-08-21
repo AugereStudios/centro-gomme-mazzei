@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { TotalsRows } from "@/components/store/TotalsRows";
 import { ButtonLink, Button } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge, Eyebrow, Field, Input, Panel, Rule, Select, SpecRow } from "@/components/ui/Primitives";
 import { computeTotals } from "@/lib/cart/totals";
 import { FREE_SHIPPING_THRESHOLD, MOUNTING_INCLUDES, SHIPPING_FLAT } from "@/lib/config/pricing";
@@ -44,16 +46,16 @@ export function CheckoutView() {
   if (totals.items.length === 0) {
     return (
       <div className="container-page py-16 lg:py-24">
-        <div className="flex max-w-xl flex-col items-start gap-5 border border-line bg-surface p-8">
-          <Rule />
-          <h1 className="headline text-2xl">Nessun articolo da ordinare</h1>
-          <p className="text-sm leading-relaxed text-fg-2">
-            Aggiungi almeno un pneumatico al carrello per completare l&apos;ordine.
-          </p>
-          <ButtonLink href="/store/catalogo" size="lg">
-            Vai al catalogo
-          </ButtonLink>
-        </div>
+        <EmptyState
+          className="max-w-xl"
+          title="Nessun articolo da ordinare"
+          description="Aggiungi almeno un pneumatico al carrello per completare l'ordine."
+          action={
+            <ButtonLink href="/store/catalogo" size="lg">
+              Vai al catalogo
+            </ButtonLink>
+          }
+        />
       </div>
     );
   }
@@ -235,21 +237,14 @@ export function CheckoutView() {
           </ul>
 
           <div className="flex flex-col">
-            <SpecRow label="Imponibile pneumatici" value={formatEUR(totals.subtotal)} />
-            <SpecRow
-              label="Montaggio + bilanciatura"
-              value={deliveryMethod === "officina" ? formatEUR(totals.mountingTotal) : "Non applicato"}
-              accent={deliveryMethod === "officina"}
-            />
-            <SpecRow
-              label="Spedizione"
-              value={
-                deliveryMethod === "spedizione"
-                  ? totals.shipping === 0
-                    ? "Gratuita"
-                    : formatEUR(totals.shipping)
-                  : "Ritiro in officina"
-              }
+            <TotalsRows
+              totals={totals}
+              method={deliveryMethod}
+              labels={{
+                subtotal: "Imponibile pneumatici",
+                mounting: "Montaggio + bilanciatura",
+                mountingOff: "Non applicato",
+              }}
             />
             <SpecRow label="di cui IVA 22%" value={formatEUR(totals.vat)} />
           </div>

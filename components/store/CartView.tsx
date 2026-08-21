@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { TotalsRows } from "@/components/store/TotalsRows";
 import { TyreVisual } from "@/components/store/TyreVisual";
 import { Button, ButtonLink } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge, Eyebrow, Panel, Rule, SpecRow } from "@/components/ui/Primitives";
 import { Stepper } from "@/components/ui/Stepper";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/config/pricing";
@@ -28,17 +30,16 @@ export function CartView() {
   if (totals.items.length === 0) {
     return (
       <div className="container-page py-16 lg:py-24">
-        <div className="flex max-w-xl flex-col items-start gap-5 border border-line bg-surface p-8 lg:p-10">
-          <Rule />
-          <h1 className="headline text-2xl">Il carrello e&apos; vuoto</h1>
-          <p className="text-sm leading-relaxed text-fg-2">
-            Cerca la misura sul fianco del pneumatico e aggiungi gli articoli al carrello: potrai scegliere tra
-            spedizione a domicilio e montaggio in officina.
-          </p>
-          <ButtonLink href="/store/catalogo" size="lg">
-            Vai al catalogo
-          </ButtonLink>
-        </div>
+        <EmptyState
+          className="max-w-xl"
+          title="Il carrello e' vuoto"
+          description="Cerca la misura sul fianco del pneumatico e aggiungi gli articoli al carrello: potrai scegliere tra spedizione a domicilio e montaggio in officina."
+          action={
+            <ButtonLink href="/store/catalogo" size="lg">
+              Vai al catalogo
+            </ButtonLink>
+          }
+        />
       </div>
     );
   }
@@ -108,21 +109,10 @@ export function CartView() {
           </div>
 
           <div className="flex flex-col">
-            <SpecRow label="Pneumatici" value={formatEUR(totals.subtotal)} />
-            <SpecRow
-              label="Montaggio"
-              value={deliveryMethod === "officina" ? formatEUR(totals.mountingTotal) : "Da definire"}
-              accent={deliveryMethod === "officina"}
-            />
-            <SpecRow
-              label="Spedizione"
-              value={
-                deliveryMethod === "spedizione"
-                  ? totals.shipping === 0
-                    ? "Gratuita"
-                    : formatEUR(totals.shipping)
-                  : "Ritiro in officina"
-              }
+            <TotalsRows
+              totals={totals}
+              method={deliveryMethod}
+              labels={{ subtotal: "Pneumatici", mounting: "Montaggio", mountingOff: "Da definire" }}
             />
             <SpecRow label="Totale" value={formatEUR(totals.total)} strong />
           </div>

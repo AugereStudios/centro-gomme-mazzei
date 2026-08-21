@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ButtonLink, Button } from "@/components/ui/Button";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge, Eyebrow, Input, Panel, Rule } from "@/components/ui/Primitives";
 import { Table, TableWrap, Td, Th } from "@/components/ui/Table";
 import { demoB2BOrders } from "@/lib/data/b2b";
@@ -34,17 +35,17 @@ export function DashboardView() {
   if (!session) {
     return (
       <div className="container-page py-16 lg:py-24">
-        <div className="flex max-w-xl flex-col items-start gap-5 border-l-2 border-accent bg-surface p-8">
-          <Eyebrow>Sessione non attiva</Eyebrow>
-          <h1 className="headline text-2xl">Effettua l&apos;accesso al portale</h1>
-          <p className="text-sm leading-relaxed text-fg-2">
-            L&apos;area rivenditori e&apos; riservata ai clienti abilitati. L&apos;accesso richiede
-            approvazione manuale dell&apos;amministratore.
-          </p>
-          <ButtonLink href="/b2b/login" size="lg">
-            Vai al login
-          </ButtonLink>
-        </div>
+        <EmptyState
+          className="max-w-xl border-transparent"
+          eyebrow="Sessione non attiva"
+          title="Effettua l'accesso al portale"
+          description="L'area rivenditori e' riservata ai clienti abilitati. L'accesso richiede approvazione manuale dell'amministratore."
+          action={
+            <ButtonLink href="/b2b/login" size="lg">
+              Vai al login
+            </ButtonLink>
+          }
+        />
       </div>
     );
   }
