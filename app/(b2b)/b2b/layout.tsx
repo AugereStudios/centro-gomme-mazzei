@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/Logo";
-import { site } from "@/lib/config/site";
+import { SiteFooter } from "@/components/site/SiteFooter";
 
 export default function B2BLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -24,14 +24,7 @@ export default function B2BLayout({ children }: { children: React.ReactNode }) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="mt-auto border-t border-line bg-surface">
-        <div className="container-page flex flex-col gap-2 py-6 text-[11px] text-fg-3 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            {site.name} — Area riservata ai clienti professionali
-          </p>
-          <p>Assistenza ordini: {site.phone.label}</p>
-        </div>
-      </footer>
+      <SiteFooter variant="b2b" />
     </>
   );
 }
