@@ -12,6 +12,7 @@ const columns = [
     links: [
       { href: "/", label: "Home" },
       { href: "/chi-siamo", label: "Chi siamo" },
+      { href: "/prodotti", label: "Prodotti" },
       { href: "/servizi", label: "Servizi" },
       { href: "/contatti", label: "Contatti" },
     ],

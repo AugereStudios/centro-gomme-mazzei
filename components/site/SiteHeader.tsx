@@ -11,6 +11,7 @@ import { classNames } from "@/lib/utils/format";
 const nav = [
   { href: "/", label: "Home" },
   { href: "/chi-siamo", label: "Chi siamo" },
+  { href: "/prodotti", label: "Prodotti" },
   { href: "/servizi", label: "Servizi" },
   { href: "/store/catalogo", label: "Store" },
   { href: "/contatti", label: "Contatti" },
