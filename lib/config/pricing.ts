@@ -1,5 +1,3 @@
-import { formatEUR } from "@/lib/utils/format";
-
 /**
  * PLACEHOLDER — listino provvisorio.
  *
@@ -52,23 +50,4 @@ export function getMountingFee(radius: number): number {
 export function getShipping(subtotal: number): number {
   if (subtotal <= 0) return 0;
   return subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_FLAT;
-}
-
-/**
- * Prezzo di partenza dei servizi di officina, per slug di lib/data/services.ts.
- * Il montaggio non ha un valore proprio: parte dalla tariffa minima per raggio,
- * cosi' non puo' divergere dal listino qui sopra.
- */
-export const SERVICE_PRICES: Record<string, { amount: number; unit: string }> = {
-  "convergenza-3d": { amount: 55, unit: "" },
-  "bilanciatura-elettronica": { amount: 8, unit: "a ruota" },
-  "deposito-pneumatici": { amount: 45, unit: "a stagione" },
-  montaggio: { amount: getMountingFee(MIN_RADIUS), unit: "a ruota" },
-};
-
-/** Etichetta pronta da mostrare, es. "da 12,00 EUR a ruota". */
-export function getServicePriceLabel(slug: string): string {
-  const price = SERVICE_PRICES[slug];
-  if (!price) return "Su preventivo";
-  return ["da", formatEUR(price.amount), price.unit].filter(Boolean).join(" ");
 }

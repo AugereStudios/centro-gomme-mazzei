@@ -3,9 +3,7 @@ import { TyreSizeSearch } from "@/components/site/TyreSizeSearch";
 import { TyreCard } from "@/components/store/TyreCard";
 import { ButtonLink } from "@/components/ui/Button";
 import { Eyebrow, Rule, SectionHeading } from "@/components/ui/Primitives";
-import { MOUNTING_FEE_BY_RADIUS } from "@/lib/config/pricing";
 import { tyres } from "@/lib/data/tyres";
-import { formatEUR } from "@/lib/utils/format";
 
 export const metadata: Metadata = {
   title: "Store online",
@@ -33,7 +31,6 @@ const steps = [
 
 export default function StorePage() {
   const evidenza = tyres.filter((t) => t.saleMode === "online").slice(0, 3);
-  const feeEntries = Object.entries(MOUNTING_FEE_BY_RADIUS);
 
   return (
     <>
@@ -88,30 +85,20 @@ export default function StorePage() {
 
       <section className="py-14 lg:py-20">
         <div className="container-page grid gap-10 lg:grid-cols-12">
-          <div className="flex flex-col gap-5 lg:col-span-5">
-            <Eyebrow>Listino montaggio</Eyebrow>
+          <div className="flex flex-col gap-5 lg:col-span-7">
+            <Eyebrow>Montaggio in officina</Eyebrow>
             <Rule />
             <h2 className="headline text-2xl sm:text-3xl">
-              Il sovrapprezzo dipende solo dal raggio del cerchio
+              Comprato online, montato da chi conosce il mezzo
             </h2>
             <p className="text-sm leading-relaxed text-fg-2">
-              Prezzo per singolo pneumatico, comprensivo di smontaggio, montaggio, bilanciatura elettronica e
-              smaltimento del vecchio pneumatico. Si applica soltanto scegliendo il ritiro in officina.
+              Scegliendo il ritiro in officina, smontaggio, montaggio, bilanciatura elettronica e smaltimento
+              del vecchio pneumatico sono compresi nell&apos;intervento. Il costo viene calcolato sul raggio
+              degli pneumatici scelti e lo vedi nel riepilogo prima di confermare l&apos;ordine.
             </p>
-          </div>
-
-          <div className="lg:col-span-7">
-            <div className="hairline-grid grid grid-cols-2 sm:grid-cols-4">
-              {feeEntries.map(([radius, fee]) => (
-                <div key={radius} className="flex flex-col gap-2 bg-surface p-5">
-                  <span className="eyebrow">R{radius}</span>
-                  <span className="headline text-xl text-accent">{formatEUR(fee)}</span>
-                </div>
-              ))}
-            </div>
-            <p className="mt-4 text-xs text-fg-3">
-              Valori indicativi del prototipo: verranno sostituiti dal listino definitivo.
-            </p>
+            <ButtonLink href="/contatti" variant="outline" className="self-start">
+              Parla con l&apos;officina
+            </ButtonLink>
           </div>
         </div>
       </section>

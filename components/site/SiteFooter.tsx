@@ -20,7 +20,7 @@ const columns = [
     links: [
       { href: "/store/catalogo", label: "Catalogo" },
       { href: "/store/carrello", label: "Carrello" },
-      { href: "/store", label: "Listino montaggio" },
+      { href: "/store", label: "Come acquistare" },
     ],
   },
   {
