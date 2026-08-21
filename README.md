@@ -12,7 +12,7 @@ npm run dev
 
 | Area | Rotte |
 | --- | --- |
-| Sito vetrina | `/`, `/servizi`, `/contatti` |
+| Sito vetrina | `/`, `/chi-siamo`, `/prodotti`, `/prodotti/[marca]`, `/servizi`, `/contatti` |
 | Store B2C | `/store`, `/store/catalogo`, `/store/pneu/[id]`, `/store/carrello`, `/store/checkout` |
 | Portale B2B | `/b2b/login`, `/b2b/dashboard` |
 
@@ -26,6 +26,20 @@ Le tre aree sono separate in route group: `app/(site)`, `app/(store)`, `app/(b2b
 | Catalogo articoli | `lib/data/tyres.ts` | Mock con la stessa forma di `types/index.ts`; da sostituire con la risposta della API fornitore. |
 | Dati aziendali (NAP, orari) | `lib/config/site.ts` | Riusati da header, footer, contatti, checkout e metadata. |
 | Anagrafica e ordini B2B | `lib/data/b2b.ts` | Sessione e movimenti dimostrativi. |
+| Schede dei marchi | `lib/data/brands.ts` | Solo il testo editoriale è scritto a mano: articoli, misure, stagioni e prezzi delle schede `/prodotti` sono derivati dal catalogo. |
+
+## Testi segnaposto
+
+Marcati con `PLACEHOLDER` nel file che li contiene, da sostituire con i contenuti reali:
+profilo aziendale e percorso in `app/(site)/chi-siamo/page.tsx`, posizionamento dei marchi in
+`lib/data/brands.ts`, indicazioni stradali in `app/(site)/contatti/page.tsx`, tariffe di montaggio in
+`lib/config/pricing.ts`, partita IVA in `lib/config/site.ts`.
+
+## Logo
+
+`public/brand/` contiene lockup e monogramma consegnati dal cliente, usati senza ritocchi; il monogramma
+serve anche da favicon (`app/icon.png`). Il navy del marchio (`#233C72`) sul fondo `#0A0A0A` ha un
+contrasto di circa 2:1: scelta voluta, la variante per fondi scuri non è stata prodotta.
 
 ## Stato applicativo
 
