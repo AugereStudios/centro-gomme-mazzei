@@ -140,7 +140,7 @@ export function DashboardView() {
         </p>
 
         <TableWrap>
-          <Table>
+          <Table className="min-w-[46rem]">
             <thead>
               <tr>
                 <Th>EAN</Th>

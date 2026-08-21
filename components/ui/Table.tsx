@@ -10,9 +10,14 @@ export function TableWrap({ className, children }: ComponentProps<"div">) {
   );
 }
 
+/**
+ * La larghezza minima non e' imposta qui: la dichiara il call site in base al
+ * numero di colonne, cosi' le tabelle strette restano leggibili su mobile
+ * mentre quelle larghe scrollano dentro `TableWrap`.
+ */
 export function Table({ className, children, ...props }: ComponentProps<"table">) {
   return (
-    <table className={classNames("w-full min-w-[46rem] border-collapse text-left", className)} {...props}>
+    <table className={classNames("w-full border-collapse text-left", className)} {...props}>
       {children}
     </table>
   );
