@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { MapPlaceholder } from "@/components/site/MapPlaceholder";
-import { OpenStatus } from "@/components/site/OpenStatus";
 import { Eyebrow, Rule } from "@/components/ui/Primitives";
 import { addressLine, site } from "@/lib/config/site";
 import { services } from "@/lib/data/services";
@@ -59,8 +58,6 @@ export function SiteFooter({ variant = "site" }: { variant?: Variant }) {
             <br />
             {site.address.zip} {site.address.city} ({site.address.province})
           </address>
-
-          <OpenStatus />
 
           <div className="flex flex-col gap-1 border-t border-line pt-5">
             <Eyebrow>Telefono</Eyebrow>

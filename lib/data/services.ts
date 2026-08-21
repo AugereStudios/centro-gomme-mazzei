@@ -8,8 +8,6 @@ export interface Service {
   points: string[];
   /** Indicazione di durata media dell'intervento, mostrata come dato tecnico. */
   duration: string;
-  /** Prezzo indicativo, segnaposto in attesa del listino definitivo. */
-  from: string;
 }
 
 export const services: Service[] = [
@@ -27,7 +25,6 @@ export const services: Service[] = [
       "Verifica altezza di assetto e usura sospensioni",
     ],
     duration: "45 - 60 minuti",
-    from: "da 55,00 EUR",
   },
   {
     slug: "bilanciatura-elettronica",
@@ -43,7 +40,6 @@ export const services: Service[] = [
       "Compresa nel servizio di montaggio",
     ],
     duration: "10 minuti a ruota",
-    from: "da 8,00 EUR a ruota",
   },
   {
     slug: "deposito-pneumatici",
@@ -59,7 +55,6 @@ export const services: Service[] = [
       "Promemoria al cambio stagione",
     ],
     duration: "Servizio stagionale",
-    from: "da 45,00 EUR a stagione",
   },
   {
     slug: "montaggio",
@@ -75,6 +70,5 @@ export const services: Service[] = [
       "Programmazione sensori TPMS",
     ],
     duration: "30 - 45 minuti a treno",
-    from: "da 12,00 EUR a ruota",
   },
 ];

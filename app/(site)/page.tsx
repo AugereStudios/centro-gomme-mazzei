@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { OpenStatus } from "@/components/site/OpenStatus";
 import { TyreSizeSearch } from "@/components/site/TyreSizeSearch";
 import { ButtonLink } from "@/components/ui/Button";
 import { BulletList, Eyebrow, Rule, SectionHeading } from "@/components/ui/Primitives";
@@ -51,24 +52,13 @@ export default function HomePage() {
                   fermo macchina e orario.
                 </p>
               </div>
-              <dl className="mt-8 flex flex-col">
-                <div className="flex items-baseline justify-between gap-4 border-t border-line py-3">
-                  <dt className="eyebrow">Telefono</dt>
-                  <dd>
-                    <a href={site.phone.href} className="text-sm font-semibold hover:text-accent">
-                      {site.phone.label}
-                    </a>
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 border-t border-line py-3">
-                  <dt className="eyebrow">Mattina</dt>
-                  <dd className="text-sm text-fg-2">Lun — Sab 8:00 / 12:00</dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 border-y border-line py-3">
-                  <dt className="eyebrow">Pomeriggio</dt>
-                  <dd className="text-sm text-fg-2">Lun — Ven 14:00 / 18:00</dd>
-                </div>
-              </dl>
+              {/* Orari e recapiti stanno nella scheda officina del footer: qui basta lo stato corrente. */}
+              <div className="mt-8 flex flex-col gap-5 border-t border-line pt-6">
+                <OpenStatus />
+                <ButtonLink href="/contatti" variant="outline" className="self-start">
+                  Orari e contatti
+                </ButtonLink>
+              </div>
             </div>
           </div>
         </div>
