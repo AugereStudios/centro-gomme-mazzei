@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink } from "@/components/ui/Button";
 import { BulletList, Eyebrow, Panel, Rule, SectionHeading, SpecRow } from "@/components/ui/Primitives";
-import { site } from "@/lib/config/site";
 import { services } from "@/lib/data/services";
 
 export const metadata: Metadata = {
@@ -54,8 +53,8 @@ export default function ServiziPage() {
                 <div className="mt-6 flex flex-col">
                   <SpecRow label="Durata media" value={service.duration} strong />
                   <SpecRow label="Prezzo" value={service.from} accent strong />
+                  {/* La sede e' nella scheda officina del footer: non si ripete qui. */}
                   <SpecRow label="Prenotazione" value="Consigliata" />
-                  <SpecRow label="Sede" value={`${site.address.street}, ${site.address.city}`} />
                 </div>
                 <ButtonLink href="/contatti" className="mt-8 w-full">
                   Prenota l&apos;intervento

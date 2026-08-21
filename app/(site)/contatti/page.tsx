@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/ContactForm";
-import { Eyebrow, Panel, Rule } from "@/components/ui/Primitives";
+import { MapPlaceholder } from "@/components/site/MapPlaceholder";
+import { BulletList, Eyebrow, Panel, Rule } from "@/components/ui/Primitives";
 import { Table, TableWrap, Td, Th } from "@/components/ui/Table";
 import { addressLine, site } from "@/lib/config/site";
 
@@ -8,6 +9,17 @@ export const metadata: Metadata = {
   title: "Contatti e orari",
   description: `Centro Gomme Mazzei — ${addressLine}. Telefono ${site.phone.label}. ${site.hoursSummary}.`,
 };
+
+/**
+ * PLACEHOLDER — indicazioni generiche, da confermare con il cliente.
+ * Non descrivono riferimenti stradali reali.
+ */
+const directions = [
+  "Officina su strada, ingresso diretto dal piazzale esterno",
+  "Spazio di manovra e sosta davanti al capannone",
+  "Accesso consentito ad autocarri e mezzi da lavoro",
+  "Per mezzi agricoli e industriali conviene avvisare prima di arrivare",
+];
 
 export default function ContattiPage() {
   return (
@@ -41,25 +53,19 @@ export default function ContattiPage() {
             </div>
           </div>
 
+          {/*
+            L'indirizzo completo e' nella scheda officina del footer: qui la
+            colonna risponde a una domanda diversa, come si arriva in officina.
+          */}
           <div className="lg:col-span-5">
             <Panel className="flex h-full flex-col gap-6 p-6 lg:p-8">
               <div className="flex flex-col gap-4">
-                <Eyebrow>Sede operativa</Eyebrow>
+                <Eyebrow>Come arrivare</Eyebrow>
                 <Rule />
-                <address className="not-italic text-lg font-semibold leading-relaxed tracking-[-0.02em]">
-                  {site.address.street}
-                  <br />
-                  {site.address.zip} {site.address.city} ({site.address.province})
-                </address>
+                <BulletList items={directions} />
               </div>
 
-              {/* Mappa segnaposto: nessuna chiamata a servizi esterni nel prototipo. */}
-              <div className="grid-texture relative flex min-h-44 flex-1 items-center justify-center border border-line bg-elevated">
-                <div className="absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 bg-accent" />
-                <span className="absolute bottom-3 left-3 text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-3">
-                  Mappa non attiva nel prototipo
-                </span>
-              </div>
+              <MapPlaceholder className="min-h-44 flex-1" />
             </Panel>
           </div>
         </div>
@@ -76,7 +82,7 @@ export default function ContattiPage() {
               concordiamo un orario dedicato.
             </p>
             <TableWrap>
-              <Table className="min-w-0">
+              <Table>
                 <thead>
                   <tr>
                     <Th>Giorni</Th>

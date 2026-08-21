@@ -2,7 +2,7 @@ import Link from "next/link";
 import { TyreSizeSearch } from "@/components/site/TyreSizeSearch";
 import { ButtonLink } from "@/components/ui/Button";
 import { BulletList, Eyebrow, Rule, SectionHeading } from "@/components/ui/Primitives";
-import { addressLine, site } from "@/lib/config/site";
+import { site } from "@/lib/config/site";
 import { services } from "@/lib/data/services";
 import { vehicleCategories } from "@/lib/data/vehicles";
 
@@ -164,15 +164,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA contatti */}
+      {/* CTA prenotazione — sede, orari e mappa vivono nel footer: qui solo le azioni. */}
       <section className="py-16 lg:py-20">
         <div className="container-page">
           <div className="flex flex-col justify-between gap-8 border border-line bg-surface p-8 lg:flex-row lg:items-center lg:p-12">
-            <div className="flex flex-col gap-4">
-              <Eyebrow>Dove siamo</Eyebrow>
+            <div className="flex max-w-xl flex-col gap-4">
+              <Eyebrow>Prenota</Eyebrow>
               <Rule />
-              <h2 className="headline text-2xl sm:text-3xl">{addressLine}</h2>
-              <p className="text-sm text-fg-2">{site.hoursSummary}</p>
+              <h2 className="headline text-2xl sm:text-3xl">
+                Fissa l&apos;intervento e trova il lavoro gia&apos; pronto.
+              </h2>
+              <p className="text-sm leading-relaxed text-fg-2">
+                Concordiamo orario e fermo macchina, prepariamo in anticipo le gomme della misura richiesta.
+                Per flotte e mezzi da lavoro organizziamo l&apos;intervento fuori dalle ore di punta.
+              </p>
             </div>
             <div className="flex flex-wrap gap-3">
               <a
@@ -183,6 +188,9 @@ export default function HomePage() {
               </a>
               <ButtonLink href="/contatti" variant="outline" size="lg">
                 Scrivici
+              </ButtonLink>
+              <ButtonLink href="/store/catalogo" variant="outline" size="lg">
+                Apri il catalogo
               </ButtonLink>
             </div>
           </div>
