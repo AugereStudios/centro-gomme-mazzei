@@ -1,5 +1,5 @@
-import { PublicShell } from "@/components/site/PublicShell";
+import { StoreShell } from "@/components/store/StoreShell";
 
 export default function StoreLayout({ children }: { children: React.ReactNode }) {
-  return <PublicShell>{children}</PublicShell>;
+  return <StoreShell>{children}</StoreShell>;
 }

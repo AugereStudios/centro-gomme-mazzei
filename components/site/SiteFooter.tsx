@@ -21,7 +21,6 @@ const columns = [
     title: "Store",
     links: [
       { href: "/store/catalogo", label: "Catalogo" },
-      { href: "/store/carrello", label: "Carrello" },
       { href: "/store", label: "Come acquistare" },
     ],
   },

@@ -3,29 +3,40 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { CartBadge } from "@/components/store/CartBadge";
 import { Logo } from "@/components/site/Logo";
 import { site } from "@/lib/config/site";
 import { classNames } from "@/lib/utils/format";
 
+/** Navigazione interna al negozio: il carrello vive qui, non nella vetrina. */
 const nav = [
-  { href: "/", label: "Home" },
-  { href: "/chi-siamo", label: "Chi siamo" },
-  { href: "/prodotti", label: "Prodotti" },
-  { href: "/servizi", label: "Servizi" },
-  { href: "/store", label: "Store" },
-  { href: "/contatti", label: "Contatti" },
+  { href: "/store/catalogo", label: "Catalogo" },
+  { href: "/store", label: "Come acquistare" },
 ] as const;
 
-export function SiteHeader() {
+export function StoreHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const isActive = (href: string) => (href === "/store" ? pathname === "/store" : pathname.startsWith(href));
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-ink/95 backdrop-blur">
+      {/* Marcatore di livello: chiarisce che si e' dentro il negozio */}
+      <div className="border-b border-line bg-surface">
+        <div className="container-page flex h-9 items-center justify-between gap-4">
+          <span className="eyebrow text-accent">Store online</span>
+          <Link
+            href="/"
+            className="text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-3 transition-colors hover:text-accent"
+          >
+            &larr; Torna al sito
+          </Link>
+        </div>
+      </div>
+
       <div className="container-page flex h-16 items-center justify-between gap-4 md:h-20">
-        <Logo />
+        <Logo href="/store" />
 
         <nav className="hidden items-center gap-8 md:flex">
           {nav.map((item) => (
@@ -43,21 +54,17 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
-          <Link
-            href="/b2b/login"
-            className="border border-line px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
-          >
-            Area rivenditori
-          </Link>
           <a
             href={site.phone.href}
-            className="bg-accent px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-fg transition-colors hover:bg-accent-strong"
+            className="text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-2 transition-colors hover:text-accent"
           >
-            {site.phone.label}
+            Assistenza {site.phone.label}
           </a>
+          <CartBadge />
         </div>
 
         <div className="flex items-center gap-3 md:hidden">
+          <CartBadge />
           <button
             type="button"
             aria-expanded={open}
@@ -95,17 +102,17 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              href="/b2b/login"
+              href="/"
               onClick={() => setOpen(false)}
               className="border-b border-line py-4 text-xs font-semibold uppercase tracking-[0.15em] text-fg-2"
             >
-              Area rivenditori
+              Torna al sito
             </Link>
             <a
               href={site.phone.href}
               className="my-4 bg-accent py-3 text-center text-xs font-semibold uppercase tracking-[0.15em] text-fg"
             >
-              Chiama {site.phone.label}
+              Assistenza {site.phone.label}
             </a>
           </nav>
         </div>
