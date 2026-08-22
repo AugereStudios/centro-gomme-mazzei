@@ -1,4 +1,4 @@
-| Anagrafica, ordini e convenzioni B2B | `lib/data/b2b.ts` | Sessione, movimenti, convenzione flotta e offerte della landing enterprise. |# Centro Gomme Mazzei — prototipo frontend
+# Centro Gomme Mazzei — prototipo frontend
 
 Prototipo **frontend-only** (nessun backend, nessun database) in Next.js 16 / App Router, TypeScript e
 Tailwind CSS v4. Tutti i dati sono mock locali.
@@ -30,7 +30,7 @@ commerciale — prezzi netti, fido, RiBa; "area enterprise" è il nome che quell
 | Listino sovrapprezzi montaggio | `lib/config/pricing.ts` | **Placeholder.** Unica sorgente dei valori R15–R22, delle spese di spedizione e dell'IVA. La UI usa solo `getMountingFee()` e `getShipping()`. |
 | Catalogo articoli | `lib/data/tyres.ts` | Mock con la stessa forma di `types/index.ts`; da sostituire con la risposta della API fornitore. |
 | Dati aziendali (NAP, orari) | `lib/config/site.ts` | Riusati da header, footer, contatti, checkout e metadata. |
-| Anagrafica e ordini B2B | `lib/data/b2b.ts` | Sessione e movimenti dimostrativi. |
+| Anagrafica, ordini e convenzioni B2B | `lib/data/b2b.ts` | Sessione, movimenti, convenzione flotta e offerte della landing enterprise. |
 | Schede dei marchi | `lib/data/brands.ts` | Solo il testo editoriale è scritto a mano: articoli, misure, stagioni e prezzi delle schede `/prodotti` sono derivati dal catalogo. |
 
 ## Testi segnaposto
