@@ -44,10 +44,10 @@ export function SiteHeader() {
 
         <div className="hidden items-center gap-4 md:flex">
           <Link
-            href="/b2b/login"
+            href="/area-enterprise/login"
             className="border border-line px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
           >
-            Area rivenditori
+            Area enterprise
           </Link>
           <a
             href={site.phone.href}
@@ -95,11 +95,11 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              href="/b2b/login"
+              href="/area-enterprise/login"
               onClick={() => setOpen(false)}
               className="border-b border-line py-4 text-xs font-semibold uppercase tracking-[0.15em] text-fg-2"
             >
-              Area rivenditori
+              Area enterprise
             </Link>
             <a
               href={site.phone.href}

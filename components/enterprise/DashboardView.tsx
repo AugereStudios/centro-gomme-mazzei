@@ -41,7 +41,7 @@ export function DashboardView() {
           title="Effettua l'accesso al portale"
           description="L'area rivenditori e' riservata ai clienti abilitati. L'accesso richiede approvazione manuale dell'amministratore."
           action={
-            <ButtonLink href="/b2b/login" size="lg">
+            <ButtonLink href="/area-enterprise/login" size="lg">
               Vai al login
             </ButtonLink>
           }

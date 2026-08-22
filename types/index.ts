@@ -71,6 +71,18 @@ export interface B2BSession {
   scontoMedio: number;
 }
 
+/** Convenzione concordata con una flotta, mostrata nell'area enterprise. */
+export interface FleetAgreement {
+  codice: string;
+  mezzi: number;
+  tipiMezzo: string;
+  /** Sconto concordato sul listino, in percentuale */
+  scontoConcordato: number;
+  validaDal: string;
+  validaAl: string;
+  referenteOfficina: string;
+}
+
 export interface B2BOrder {
   id: string;
   date: string;

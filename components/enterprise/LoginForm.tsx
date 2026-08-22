@@ -16,13 +16,13 @@ export function LoginForm() {
     e.preventDefault();
     // PLACEHOLDER DEMO — nessuna verifica delle credenziali.
     login(email);
-    router.push("/b2b/dashboard");
+    router.push("/area-enterprise/dashboard");
   }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-6 border border-line bg-surface p-6 lg:p-8">
       <div className="flex flex-col gap-3">
-        <Eyebrow>Accesso rivenditori</Eyebrow>
+        <Eyebrow>Accesso area enterprise</Eyebrow>
         <Rule />
       </div>
 

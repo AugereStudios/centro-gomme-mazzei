@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { LoginForm } from "@/components/b2b/LoginForm";
+import { LoginForm } from "@/components/enterprise/LoginForm";
 import { BulletList, SectionHeading } from "@/components/ui/Primitives";
 import { site } from "@/lib/config/site";
 
 export const metadata: Metadata = {
-  title: "Accesso rivenditori",
+  title: "Accesso area enterprise",
   description:
     "Area riservata ai clienti professionali del Centro Gomme Mazzei. L'accesso richiede approvazione manuale dell'amministratore.",
 };

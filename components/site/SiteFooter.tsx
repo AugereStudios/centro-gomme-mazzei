@@ -4,7 +4,7 @@ import { Eyebrow, Rule } from "@/components/ui/Primitives";
 import { addressLine, site } from "@/lib/config/site";
 import { services } from "@/lib/data/services";
 
-type Variant = "site" | "b2b";
+type Variant = "site" | "enterprise";
 
 const columns = [
   {
@@ -32,11 +32,11 @@ const columns = [
 ] as const;
 
 export function SiteFooter({ variant = "site" }: { variant?: Variant }) {
-  if (variant === "b2b") {
+  if (variant === "enterprise") {
     return (
       <footer className="mt-auto border-t border-line bg-surface">
         <BottomBar
-          left={`${site.name} — Area riservata ai clienti professionali`}
+          left={`${site.name} — Area enterprise per flotte e rivenditori`}
           right={`Assistenza ordini: ${site.phone.label}`}
         />
       </footer>
@@ -98,10 +98,10 @@ export function SiteFooter({ variant = "site" }: { variant?: Variant }) {
                 {column.title === "Store" ? (
                   <li className="pt-2">
                     <Link
-                      href="/b2b/login"
+                      href="/area-enterprise/login"
                       className="inline-block border border-line px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
                     >
-                      Area rivenditori
+                      Area enterprise
                     </Link>
                   </li>
                 ) : null}
