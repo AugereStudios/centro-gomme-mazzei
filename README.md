@@ -1,4 +1,4 @@
-# Centro Gomme Mazzei — prototipo frontend
+| Anagrafica, ordini e convenzioni B2B | `lib/data/b2b.ts` | Sessione, movimenti, convenzione flotta e offerte della landing enterprise. |# Centro Gomme Mazzei — prototipo frontend
 
 Prototipo **frontend-only** (nessun backend, nessun database) in Next.js 16 / App Router, TypeScript e
 Tailwind CSS v4. Tutti i dati sono mock locali.
@@ -14,9 +14,14 @@ npm run dev
 | --- | --- |
 | Sito vetrina | `/`, `/chi-siamo`, `/prodotti`, `/prodotti/[marca]`, `/servizi`, `/contatti` |
 | Store B2C | `/store`, `/store/catalogo`, `/store/pneu/[id]`, `/store/carrello`, `/store/checkout` |
-| Portale B2B | `/b2b/login`, `/b2b/dashboard` |
+| Area enterprise | `/area-enterprise`, `/area-enterprise/login`, `/area-enterprise/dashboard` |
 
-Le tre aree sono separate in route group: `app/(site)`, `app/(store)`, `app/(b2b)`.
+Le tre aree sono livelli separati, in route group distinti — `app/(site)`, `app/(store)`,
+`app/(enterprise)` — ognuno con il proprio guscio: la vetrina usa `SiteHeader`/`SiteFooter`, il negozio
+`StoreShell` (il carrello vive solo lì), l'area enterprise ha header proprio e footer in variante ridotta.
+
+"B2B" nel codice (`lib/data/b2b.ts`, `lib/store/b2b-store.ts`, tipi `B2BSession`) indica il canale
+commerciale — prezzi netti, fido, RiBa; "area enterprise" è il nome che quell'area ha nell'interfaccia.
 
 ## Dove si innestano i dati reali
 
