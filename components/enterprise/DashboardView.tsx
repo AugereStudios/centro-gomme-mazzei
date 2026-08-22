@@ -1,12 +1,13 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { OrderRequestPanel, type RequestLine } from "@/components/enterprise/OrderRequestPanel";
 import { ButtonLink, Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Badge, Eyebrow, Input, Panel, Rule } from "@/components/ui/Primitives";
 import { Table, TableWrap, Td, Th } from "@/components/ui/Table";
-import { demoB2BOrders } from "@/lib/data/b2b";
-import { tyres } from "@/lib/data/tyres";
+import { demoB2BOrders, demoFleetAgreement } from "@/lib/data/b2b";
+import { getTyreById, tyres } from "@/lib/data/tyres";
 import { useHydrated } from "@/lib/hooks/use-hydrated";
 import { useB2BStore } from "@/lib/store/b2b-store";
 import { formatEUR, formatSizeShort, seasonLabels } from "@/lib/utils/format";
@@ -16,6 +17,41 @@ export function DashboardView() {
   const session = useB2BStore((s) => s.session);
   const logout = useB2BStore((s) => s.logout);
   const [query, setQuery] = useState("");
+  /** Selezione della richiesta d'ordine: vive finche' la pagina resta aperta. */
+  const [selection, setSelection] = useState<Record<string, number>>({});
+  const [requestId, setRequestId] = useState<string | null>(null);
+
+  const requestLines: RequestLine[] = Object.entries(selection)
+    .map(([tyreId, qty]) => {
+      const tyre = getTyreById(tyreId);
+      return tyre ? { tyre, qty } : null;
+    })
+    .filter((l): l is RequestLine => l !== null);
+
+  function addToRequest(tyreId: string, qty: number) {
+    setSelection((current) => ({ ...current, [tyreId]: (current[tyreId] ?? 0) + qty }));
+  }
+
+  function setRequestQty(tyreId: string, qty: number) {
+    if (qty <= 0) {
+      removeFromRequest(tyreId);
+      return;
+    }
+    setSelection((current) => ({ ...current, [tyreId]: qty }));
+  }
+
+  function removeFromRequest(tyreId: string) {
+    setSelection((current) => {
+      const next = { ...current };
+      delete next[tyreId];
+      return next;
+    });
+  }
+
+  function submitRequest() {
+    setRequestId(`RIC-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`);
+    setSelection({});
+  }
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -39,7 +75,7 @@ export function DashboardView() {
           className="max-w-xl border-transparent"
           eyebrow="Sessione non attiva"
           title="Effettua l'accesso al portale"
-          description="L'area rivenditori e' riservata ai clienti abilitati. L'accesso richiede approvazione manuale dell'amministratore."
+          description="L'area enterprise e' riservata ai clienti abilitati, flotte e rivenditori. L'accesso richiede approvazione manuale dell'amministratore."
           action={
             <ButtonLink href="/area-enterprise/login" size="lg">
               Vai al login
@@ -117,7 +153,38 @@ export function DashboardView() {
         </Panel>
       </section>
 
-      {/* Ricerca rapida */}
+      {/* Convenzione flotta */}
+      <section className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3 border-b border-line pb-4">
+          <Eyebrow>Convenzione attiva</Eyebrow>
+          <h2 className="headline text-xl">Accordo flotta {demoFleetAgreement.codice}</h2>
+        </div>
+        <div className="hairline-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="flex flex-col gap-2 bg-surface p-5">
+            <span className="eyebrow">Mezzi coperti</span>
+            <span className="headline text-2xl">{demoFleetAgreement.mezzi}</span>
+            <span className="text-xs text-fg-3">{demoFleetAgreement.tipiMezzo}</span>
+          </div>
+          <div className="flex flex-col gap-2 bg-surface p-5">
+            <span className="eyebrow">Sconto concordato</span>
+            <span className="headline text-2xl text-accent">{demoFleetAgreement.scontoConcordato}%</span>
+            <span className="text-xs text-fg-3">Fisso per tutta la durata</span>
+          </div>
+          <div className="flex flex-col gap-2 bg-surface p-5">
+            <span className="eyebrow">Validita&apos;</span>
+            <span className="headline text-lg">{demoFleetAgreement.validaAl}</span>
+            <span className="text-xs text-fg-3">Dal {demoFleetAgreement.validaDal}</span>
+          </div>
+          <div className="flex flex-col gap-2 bg-surface p-5">
+            <span className="eyebrow">In officina</span>
+            <span className="text-sm leading-relaxed text-fg-2">
+              {demoFleetAgreement.referenteOfficina}
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* Listino e richiesta d'ordine */}
       <section className="flex flex-col gap-5">
         <div className="flex flex-col gap-4 border-b border-line pb-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-3">
@@ -140,8 +207,11 @@ export function DashboardView() {
           {query ? ` per "${query}"` : " a listino"}
         </p>
 
+        <div className="grid gap-6 lg:grid-cols-12">
+          {/* min-w-0: senza, la colonna si allarga con la tabella invece di lasciarla scorrere */}
+          <div className="flex min-w-0 flex-col gap-3 lg:col-span-8">
         <TableWrap>
-          <Table className="min-w-[46rem]">
+          <Table className="min-w-[52rem]">
             <thead>
               <tr>
                 <Th>EAN</Th>
@@ -153,6 +223,7 @@ export function DashboardView() {
                 <Th className="text-right">Listino</Th>
                 <Th className="text-right">Netto</Th>
                 <Th className="text-right">Sconto</Th>
+                <Th className="text-right">Ordina</Th>
               </tr>
             </thead>
             <tbody>
@@ -173,12 +244,19 @@ export function DashboardView() {
                     </Td>
                     <Td className="text-right font-semibold text-fg">{formatEUR(t.netPrice)}</Td>
                     <Td className="text-right text-accent">{sconto !== null ? `-${sconto}%` : "—"}</Td>
+                    <Td className="text-right">
+                      <AddToRequest
+                        max={t.stock}
+                        onAdd={(qty) => addToRequest(t.id, qty)}
+                        label={`${t.brand} ${t.model}`}
+                      />
+                    </Td>
                   </tr>
                 );
               })}
               {results.length === 0 ? (
                 <tr>
-                  <Td colSpan={9} className="py-8 text-center text-fg-3">
+                  <Td colSpan={10} className="py-8 text-center text-fg-3">
                     Nessun articolo corrisponde alla ricerca.
                   </Td>
                 </tr>
@@ -189,6 +267,20 @@ export function DashboardView() {
         <p className="text-xs text-fg-3">
           Prezzi netti indicativi, IVA esclusa. Il listino definitivo sara&apos; allineato alla API fornitore.
         </p>
+        </div>
+
+          <div className="lg:col-span-4">
+            <OrderRequestPanel
+              lines={requestLines}
+              residuoAttuale={residuo}
+              onSetQty={setRequestQty}
+              onRemove={removeFromRequest}
+              onSubmit={submitRequest}
+              requestId={requestId}
+              onReset={() => setRequestId(null)}
+            />
+          </div>
+        </div>
       </section>
 
       {/* Ultimi ordini */}
@@ -225,5 +317,43 @@ export function DashboardView() {
         </TableWrap>
       </section>
     </div>
+  );
+}
+
+/**
+ * Controllo di riga del listino: quantita' e aggiunta alla richiesta.
+ * Parte da 4 perche' nel canale si ragiona a treno di gomme.
+ */
+function AddToRequest({
+  max,
+  onAdd,
+  label,
+}: {
+  max: number;
+  onAdd: (qty: number) => void;
+  label: string;
+}) {
+  const [qty, setQty] = useState(4);
+
+  return (
+    <span className="flex items-center justify-end gap-2">
+      <input
+        type="number"
+        min={1}
+        max={max}
+        value={qty}
+        aria-label={`Quantita' ${label}`}
+        onChange={(e) => setQty(Math.min(Math.max(Number(e.target.value) || 1, 1), max))}
+        className="w-14 border border-line bg-ink px-2 py-1.5 text-center text-sm text-fg [appearance:textfield] focus:border-accent focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+      />
+      <button
+        type="button"
+        onClick={() => onAdd(qty)}
+        aria-label={`Aggiungi ${label} alla richiesta`}
+        className="border border-line px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
+      >
+        Aggiungi
+      </button>
+    </span>
   );
 }
